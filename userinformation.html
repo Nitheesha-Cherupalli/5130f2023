@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Information</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+    </style>
+</head>
+<body>
+    <h1>User Information</h1>
+    <p id="ip-address"></p>
+    <p id="browser-info"></p>
+    <p id="screen-resolution"></p>
+    <p id="geolocation"></p>
+    <p id="referring-website"></p>
+    <p id="operating-system"></p>
+
+    <script>
+        // Get user's IP address using a third-party API
+        fetch('https://api.ipify.org?format=json')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('ip-address').textContent = 'Your IP Address: ' + data.ip;
+            })
+            .catch(error => console.error(error));
+
+        // Get user's browser information
+        document.getElementById('browser-info').textContent = 'Your Browser: ' + navigator.userAgent;
+
+        // Get user's screen resolution
+        document.getElementById('screen-resolution').textContent = 'Your Screen Resolution: ' + window.screen.width + 'x' + window.screen.height;
+
+        // Get user's geolocation (requires user consent)
+        navigator.geolocation.getCurrentPosition(position => {
+            document.getElementById('geolocation').textContent = 'Your Geolocation: ' + position.coords.latitude + ', ' + position.coords.longitude;
+        });
+
+        // Get referring website
+        document.getElementById('referring-website').textContent = 'Referring Website: ' + document.referrer;
+
+        // Get user's operating system
+        document.getElementById('operating-system').textContent = 'Your Operating System: ' + navigator.platform;
+    </script>
+</body>
+</html>
