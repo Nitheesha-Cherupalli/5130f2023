@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Validation</title>
+    <style>
+        body {
+            background-color: #add8e6; /* Light blue background color */
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            width: 50%;
+            margin: 0 auto;
+            background-color: #ffffff; /* White background for the form container */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+        }
+
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Form Validation</h1>
+        <form id="validationForm">
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email"><br>
+            <label for="phone">Phone Number:</label>
+            <input type="text" id="phone" name="phone"><br>
+            <label for="webpage">Web Page:</label>
+            <input type="text" id="webpage" name="webpage"><br>
+            <input type="submit" value="Submit">
+        </form>
+        <div id="errorMessages" class="error"></div>
+    </div>
+
+    <script>
+        document.getElementById("validationForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            var email = document.getElementById("email").value;
+            var phone = document.getElementById("phone").value;
+            var webpage = document.getElementById("webpage").value;
+            var errorMessages = [];
+
+            // Email validation using regex
+            var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email)) {
+                errorMessages.push("Invalid email format");
+            }
+
+            // Phone number validation using regex
+            var phonePattern = /^\d{10}$/;
+            if (!phonePattern.test(phone)) {
+                errorMessages.push("Invalid phone number format (10 digits only)");
+            }
+
+            // Web page validation using regex
+            var webpagePattern = /^(http|https):\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,}(\/\S*)?$/;
+            if (!webpagePattern.test(webpage)) {
+                errorMessages.push("Invalid web page URL format");
+            }
+
+            var errorDiv = document.getElementById("errorMessages");
+            errorDiv.innerHTML = "";
+
+            if (errorMessages.length > 0) {
+                errorDiv.innerHTML = errorMessages.join("<br>");
+            } else {
+                errorDiv.innerHTML = "Form submitted successfully!";
+            }
+        });
+    </script>
+</body>
+</html>
+S
