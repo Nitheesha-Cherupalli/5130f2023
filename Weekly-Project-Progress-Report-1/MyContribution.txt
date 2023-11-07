@@ -1,0 +1,15 @@
+                                          WEEKLY PROJECT PROGRESS REPORT 1
+
+                                       DATABASE COLLECTION - (MY CONTRIBUTION)
+
+
+                         The database storage layout that is contained in this folder is what I initially implemented. The database storage for our project includes a list of employees together with their Employee ID, First and Last Name, Email ID, and information about how to update and delete the Employee ID.
+
+-> Employees can also be added and removed from this database storage. This kind of database storage helps both small and large enterprises store data effectively and safely, which lowers human labor and boosts productivity. Employee records shall be stored in relational databases, such as MYSQL or PostgreSQL.
+
+-> Our team's main priority during the first stages of the PulseHR Employee Management System project was project initiation. This included installing necessary technologies including:
+HTML, CSS, and JavaScript and creating a development environment that was favorable to building the core infrastructure.
+
+->  We concentrated on creating a user interface that prioritized quickness and user-friendliness at the same time. The development of a strong front-end architecture and a smooth navigation system were our main goals. 
+
+-> In addition, we simultaneously established the database and backend frameworks that are essential to the operation of the complete system. To ensure the smooth functioning of the system, this involved configuring the backend server, specifying the database structure, and creating the connections required to enable data storage and retrieval.
