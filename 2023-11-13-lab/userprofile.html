@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f0f0f0;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 12px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .error {
+            color: red;
+            margin-top: -10px;
+            margin-bottom: 10px;
+        }
+
+        .phoneInput,
+        .authenticatorApps {
+            display: none;
+        }
+
+        .lastLogin {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        h2 {
+            text-align: center;
+            color: #4CAF50;
+        }
+
+        p {
+            text-align: center;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>User Profile</h2>
+
+    <form id="profileForm" onsubmit="requestLocationPermission(event)">
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="firstName" required>
+
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="lastName" required>
+
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob" name="dob" required>
+
+        <label for="place">Place:</label>
+        <input type="text" id="place" name="place" required>
+
+        <label for="pincode">Pincode:</label>
+        <input type="text" id="pincode" name="pincode" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <p id="emailError" class="error"></p>
+
+        <label for="verifyEmail">Verify Email:</label>
+        <input type="email" id="verifyEmail" name="verifyEmail" required>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+
+        <label for="2faMethod">Two-Factor Authentication Method:</label>
+        <select id="2faMethod" name="2faMethod" required onchange="toggleFields()">
+            <option value="phone">Phone Number</option>
+            <option value="authenticator">Authenticator App</option>
+        </select>
+
+        <div class="phoneInput">
+            <label for="phoneNumber">Phone Number:</label>
+            <input type="tel" id="phoneNumber" name="phoneNumber">
+        </div>
+
+        <div class="authenticatorApps">
+            <label for="authenticatorApp">Authenticator App:</label>
+            <select id="authenticatorApp" name="authenticatorApp">
+                <option value="google">Google Authenticator</option>
+                <option value="authy">Authy</option>
+                <!-- Add more authenticator apps as needed -->
+            </select>
+        </div>
+
+        <label for="2faCode">Two-Factor Authentication Code:</label>
+        <input type="text" id="2faCode" name="2faCode" required>
+
+        <label for="motherTongue">Mother Tongue:</label>
+        <input type="text" id="motherTongue" name="motherTongue" required>
+
+        <label for="preferredLanguage">Preferred Language:</label>
+        <select id="preferredLanguage" name="preferredLanguage" required>
+            <option value="english">English</option>
+            <option value="chinese">Chinese</option>
+            <option value="french">French</option>
+            <option value="spanish">Spanish</option>
+        </select>
+
+        <button type="submit">Sign Up</button>
+    </form>
+
+    <p class="lastLogin" id="lastLogin">Last Login: Not available</p>
+
+    <p>Already have an account? <a href="#" id="signInLink">Sign In</a></p>
+    <p>Continue as a guest? <a href="#" id="guestLink">Guest</a></p>
+
+    <script>
+        function toggleFields() {
+            var methodSelect = document.getElementById("2faMethod");
+            var phoneInput = document.querySelector(".phoneInput");
+            var authenticatorApps = document.querySelector(".authenticatorApps");
+
+            if (methodSelect.value === "phone") {
+                phoneInput.style.display = "block";
+                authenticatorApps.style.display = "none";
+            } else if (methodSelect.value === "authenticator") {
+                phoneInput.style.display = "none";
+                authenticatorApps.style.display = "block";
+            }
+        }
+
+        document.getElementById("signInLink").addEventListener("click", function () {
+            // Implement logic for switching to the sign-in form
+            alert("Switching to Sign In form");
+        });
+
+        document.getElementById("guestLink").addEventListener("click", function () {
+            // Implement logic for continuing as a guest
+            alert("Continuing as Guest");
+        });
+
+        document.getElementById("profileForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            updateLastLogin();
+        });
+
+        function requestLocationPermission(event) {
+            event.preventDefault();
+            var permission = confirm("Do you allow access to your location?");
+
+            if (permission) {
+                getLocation();
+            } else {
+                alert("Location access is mandatory.");
+            }
+        }
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+
+        function showPosition(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+
+            alert("Location captured!\nLatitude: " + latitude + "\nLongitude: " + longitude);
+            updateLastLogin();
+            // You can send the captured location to the server or perform other actions here.
+        }
+
+        function updateLastLogin() {
+            var lastLoginElement = document.getElementById("lastLogin");
+            var currentDate = new Date();
+            var formattedDate = currentDate.toLocaleString();
+            lastLoginElement.textContent = "Last Login: " + formattedDate;
+        }
+    </script>
+
+</body>
+
+</html>
